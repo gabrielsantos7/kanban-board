@@ -2,29 +2,39 @@ import { useState } from 'react';
 import { PlusIcon } from '../icons/PlusIcon';
 import { Column } from '../models';
 import { generateId } from '../helpers';
+import { ColumnContainer } from './ColumnContainer';
 
 export function KanbanBoard() {
-  const [columns, setColmns] = useState<Column[]>([]);
+  const [columns, setColumns] = useState<Column[]>([]);
 
   function createNewColumn() {
-    const columnToAdd: Column = {
+    const newColumn: Column = {
       id: generateId(),
       title: `Coluna ${columns.length + 1}`
     };
-    setColmns([...columns, columnToAdd]);
+    setColumns([...columns, newColumn]);
   }
-  console.log(columns);
+
+  function deleteColumn(id: string) {
+    const filteredColumns = columns.filter((column) => column.id !== id);
+    setColumns([...filteredColumns]);
+  }
+
   return (
     <div className="container w-full min-h-screen flex items-center  overflow-x-auto overflow-y-hidden px-10">
       <div className="m-auto flex gap-4">
         <div className="flex gap-4">
-          {columns.map(column => (
-            <div key={column.id}>{column.title}</div>
+          {columns.map((column) => (
+            <ColumnContainer
+              column={column}
+              deleteColumn={deleteColumn}
+              key={column.id}
+            />
           ))}
         </div>
         <button
           onClick={createNewColumn}
-          className="h-15 w-350px min-w-350px cursor-pointer rounded-lg bg-main border-2 border-column p-4 ring-rose-500 hover:ring-2 flex gap-2"
+          className="h-15 w-350px min-w-350px cursor-pointer rounded-lg bg-main border-2 border-column p-4 ring-rose-500 hover:ring-2 flex gap-2 duration-300"
         >
           <PlusIcon />
           Adicionar coluna
