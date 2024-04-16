@@ -40,6 +40,15 @@ export function KanbanBoard() {
     setColumns([...filteredColumns]);
   }
 
+  function updateColumn(id: string, title: string) {
+    const newColumns = columns.map((column) => {
+      if (column.id !== id) return column;
+      return { ...column, title };
+    });
+
+    setColumns([...newColumns]);
+  }
+
   function onDragStart(event: DragStartEvent) {
     if (event.active.data.current?.type === 'Column') {
       setActiveColumn(event.active.data.current.column);
@@ -83,6 +92,7 @@ export function KanbanBoard() {
                 <ColumnContainer
                   column={column}
                   deleteColumn={deleteColumn}
+                  updateColumn={updateColumn}
                   key={column.id}
                 />
               ))}
@@ -102,6 +112,7 @@ export function KanbanBoard() {
               <ColumnContainer
                 column={activeColumn}
                 deleteColumn={deleteColumn}
+                updateColumn={updateColumn}
               />
             )}
           </DragOverlay>,
