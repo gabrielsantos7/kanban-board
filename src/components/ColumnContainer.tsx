@@ -76,7 +76,7 @@ export function ColumnContainer(props: Props) {
           className="flex gap-2 select-none"
         >
           <div className="flex justify-center items-center bg-column size-6 text-sm rounded-full">
-            <span>0</span>
+            <span>{tasks.length}</span>
           </div>
           {!editMode && <span className="cursor-text">{column.title}</span>}
           {editMode && (
