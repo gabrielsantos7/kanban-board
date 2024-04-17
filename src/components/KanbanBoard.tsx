@@ -59,9 +59,19 @@ export function KanbanBoard() {
     setTasks([...tasks, newTask]);
   }
 
-  function deleteTask(id:string) {
+  function deleteTask(id: string) {
     const filteredTasks = tasks.filter((task) => task.id !== id);
     setTasks([...filteredTasks]);
+  }
+
+  function updateTask(id: string, content: string) {
+    const newTasks = tasks.map((task) => {
+      if (task.id !== id) return task;
+
+      return { ...task, content };
+    });
+
+    setTasks([...newTasks]);
   }
 
   function onDragStart(event: DragStartEvent) {
@@ -111,6 +121,7 @@ export function KanbanBoard() {
                   updateColumn={updateColumn}
                   createTask={createTask}
                   deleteTask={deleteTask}
+                  updateTask={updateTask}
                   key={column.id}
                 />
               ))}
@@ -136,6 +147,7 @@ export function KanbanBoard() {
                 updateColumn={updateColumn}
                 createTask={createTask}
                 deleteTask={deleteTask}
+                updateTask={updateTask}
               />
             )}
           </DragOverlay>,
