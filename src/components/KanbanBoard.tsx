@@ -10,7 +10,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { PlusIcon } from '../icons/PlusIcon';
-import { Column } from '../models';
+import { Column, Task } from '../models';
 import { generateId } from '../helpers';
 import { ColumnContainer } from './ColumnContainer';
 import { createPortal } from 'react-dom';
@@ -22,6 +22,7 @@ export function KanbanBoard() {
     [columns]
   );
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 3 } })
@@ -47,6 +48,20 @@ export function KanbanBoard() {
     });
 
     setColumns([...newColumns]);
+  }
+
+  function createTask(columnId: string) {
+    const newTask: Task = {
+      id: generateId(),
+      content: `Tarefa ${tasks.length + 1}`,
+      columnId
+    };
+    setTasks([...tasks, newTask]);
+  }
+
+  function deleteTask(id:string) {
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTasks([...filteredTasks]);
   }
 
   function onDragStart(event: DragStartEvent) {
@@ -91,8 +106,11 @@ export function KanbanBoard() {
               {columns.map((column) => (
                 <ColumnContainer
                   column={column}
+                  tasks={tasks.filter((task) => task.columnId === column.id)}
                   deleteColumn={deleteColumn}
                   updateColumn={updateColumn}
+                  createTask={createTask}
+                  deleteTask={deleteTask}
                   key={column.id}
                 />
               ))}
@@ -111,8 +129,13 @@ export function KanbanBoard() {
             {activeColumn && (
               <ColumnContainer
                 column={activeColumn}
+                tasks={tasks.filter(
+                  (task) => task.columnId === activeColumn.id
+                )}
                 deleteColumn={deleteColumn}
                 updateColumn={updateColumn}
+                createTask={createTask}
+                deleteTask={deleteTask}
               />
             )}
           </DragOverlay>,

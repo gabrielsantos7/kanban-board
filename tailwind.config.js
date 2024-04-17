@@ -1,4 +1,3 @@
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -13,6 +12,7 @@ export default {
       },
       spacing: {
         15: '3.75rem',
+        25: '6.25rem',
         '350px': '350px',
         '500px': '500px'
       }

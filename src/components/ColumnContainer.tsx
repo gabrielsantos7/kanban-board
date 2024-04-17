@@ -1,17 +1,22 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { TrashIcon } from '../icons/TrashIcon';
-import { Column } from '../models';
+import { Column, Task } from '../models';
 import { useState } from 'react';
+import { PlusIcon } from '../icons/PlusIcon';
+import { TaskCard } from './TaskCard';
 
 interface Props {
   column: Column;
+  tasks: Task[];
   deleteColumn: (id: string) => void;
   updateColumn: (id: string, title: string) => void;
+  createTask: (id: string) => void;
+  deleteTask: (id: string) => void;
 }
 
 export function ColumnContainer(props: Props) {
-  const { column, deleteColumn, updateColumn } = props;
+  const { column, tasks, deleteColumn, updateColumn, createTask, deleteTask } = props;
 
   const [editMode, setEditMode] = useState(false);
 
@@ -85,11 +90,18 @@ export function ColumnContainer(props: Props) {
           <TrashIcon />
         </button>
       </div>
-      <div className="flex flex-grow">
-        <p>Content</p>
+      <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
+        {tasks.map((task) => (
+          <TaskCard key={task.id} task={task} deleteTask={deleteTask} />
+        ))}
       </div>
-      <div>
-        <p>Footer</p>
+      <div className="flex items-center justify-center">
+        <button
+          onClick={() => createTask(column.id)}
+          className="w-full flex items-center justify-center gap-2 border-4 border-column border-x-column rounded-md p-4 hover:bg-main hover:text-rose-500 active:bg-black duration-300 font-semibold"
+        >
+          <PlusIcon /> Adicionar tarefa
+        </button>
       </div>
     </div>
   );
