@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   DndContext,
   DragEndEvent,
@@ -12,7 +12,7 @@ import {
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { PlusIcon } from '../icons/PlusIcon';
 import { Column, Task } from '../models';
-import { generateId } from '../helpers';
+import { generateId, getSavedColumns, getSavedTasks } from '../helpers';
 import { ColumnContainer } from './ColumnContainer';
 import { createPortal } from 'react-dom';
 import { TaskCard } from './TaskCard';
@@ -30,6 +30,19 @@ export function KanbanBoard() {
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 3 } })
   );
+
+  useEffect(() => {
+    setColumns(getSavedColumns());
+    setTasks(getSavedTasks())
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('columns', JSON.stringify(columns));
+  }, [columns]);
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks])
 
   function createNewColumn() {
     const newColumn: Column = {
