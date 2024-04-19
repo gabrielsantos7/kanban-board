@@ -28,12 +28,12 @@ export function KanbanBoard() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 3 } })
+    useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
   );
 
   useEffect(() => {
     setColumns(getSavedColumns());
-    setTasks(getSavedTasks())
+    setTasks(getSavedTasks());
   }, []);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export function KanbanBoard() {
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks])
+  }, [tasks]);
 
   function createNewColumn() {
     const newColumn: Column = {
@@ -55,6 +55,8 @@ export function KanbanBoard() {
   function deleteColumn(id: string) {
     const filteredColumns = columns.filter((column) => column.id !== id);
     setColumns([...filteredColumns]);
+    const filteredTasks = tasks.filter((task) => task.columnId !== id);
+    setTasks([...filteredTasks]);
   }
 
   function updateColumn(id: string, title: string) {
@@ -147,7 +149,6 @@ export function KanbanBoard() {
         const overIndex = tasks.findIndex((t) => t.id === overId);
 
         if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
-          // Fix introduced after video recording
           tasks[activeIndex].columnId = tasks[overIndex].columnId;
           return arrayMove(tasks, activeIndex, overIndex - 1);
         }

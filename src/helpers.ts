@@ -1,35 +1,35 @@
 import { Column, Task } from './models';
 
 const defaultColumns: Column[] = [
-  { id: '1', title: 'Para Fazer📝' },
-  { id: '2', title: 'Em Progresso🚀' },
-  { id: '3', title: 'Feito🚩' }
+  { id: '1805652436', title: 'Para Fazer📝' },
+  { id: '8782861978', title: 'Em Progresso🚀' },
+  { id: '3587043769', title: 'Feito🚩' }
 ];
 
 const defaultTasks: Task[] = [
   {
-    id: '1',
-    columnId: '1',
+    id: '9865965494',
+    columnId: '1805652436',
     content: 'Criar Wireframes para o Projeto 🎨'
   },
   {
-    id: '2',
-    columnId: '1',
+    id: '78540853706',
+    columnId: '1805652436',
     content: 'Desenvolver Componente de Login 🔑'
   },
   {
-    id: '3',
-    columnId: '2',
+    id: '5747875400',
+    columnId: '8782861978',
     content: 'Testar Funcionalidades do Sistema ⚙️'
   },
   {
-    id: '4',
-    columnId: '2',
+    id: '54393890154',
+    columnId: '8782861978',
     content: 'Preparar Documentação para Entrega 📄'
   },
   {
-    id: '5',
-    columnId: '3',
+    id: '0789546339',
+    columnId: '3587043769',
     content: 'Revisar Interface com o Cliente 👨‍💼'
   }
 ];
