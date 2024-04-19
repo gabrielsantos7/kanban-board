@@ -3,6 +3,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { TrashIcon } from '../icons/TrashIcon';
 import { Task } from '../models';
 import { useSortable } from '@dnd-kit/sortable';
+import { EmptyCard } from './EmptyCard';
 
 interface Props {
   task: Task;
@@ -42,10 +43,10 @@ export function TaskCard({ task, deleteTask, updateTask }: Props) {
 
   if (isDragging) {
     return (
-      <div
-        ref={setNodeRef}
+      <EmptyCard
+        setNodeRef={setNodeRef}
         style={style}
-        className="opacity-30 bg-mainBackgroundColor p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl border-2 border-rose-500  cursor-grab relative"
+        isColumnContainer={false}
       />
     );
   }

@@ -5,6 +5,7 @@ import { Column, Task } from '../models';
 import { useMemo, useState } from 'react';
 import { PlusIcon } from '../icons/PlusIcon';
 import { TaskCard } from './TaskCard';
+import { EmptyCard } from './EmptyCard';
 
 interface Props {
   column: Column;
@@ -29,8 +30,8 @@ export function ColumnContainer(props: Props) {
 
   const [editMode, setEditMode] = useState(false);
   const taskIds = useMemo(() => {
-    return tasks.map((task) => task.id)
-  }, [tasks])
+    return tasks.map((task) => task.id);
+  }, [tasks]);
 
   const {
     setNodeRef,
@@ -55,11 +56,7 @@ export function ColumnContainer(props: Props) {
 
   if (isDragging) {
     return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        className="bg-column w-350px h-500px max-h-500px rounded-md flex flex-col opacity-40 border-2 border-rose-500"
-      />
+      <EmptyCard setNodeRef={setNodeRef} style={style} isColumnContainer />
     );
   }
 
